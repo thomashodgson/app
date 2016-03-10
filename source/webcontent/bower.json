@@ -1,0 +1,7 @@
+{
+  
+  "name": "DLM 2016",
+  "dependencies": {
+    "honeycomb": "https://github.com/red-gate/honeycomb-web-toolkit.git#v1.0.0"
+  }
+}

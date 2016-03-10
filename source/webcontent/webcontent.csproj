@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{53F7D37E-E3BA-49D9-831D-342019C4AB98}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>webcontent</RootNamespace>
+    <AssemblyName>webcontent</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="index.html" />
+    <Content Include="resources\home.png" />
+    <Content Include="src\js\api\ajaxClient.js" />
+    <Content Include="src\js\auth\Auth.js" />
+    <Content Include="src\js\router\Router.js" />
+    <Content Include="src\js\signalR\SignalRConnection.js" />
+    <Content Include="src\js\view-model-updates\ClientSide.js" />
+    <None Include="bower.json" />
+    <None Include="src\style.scss" />
+    <None Include="src\views\generic-ui\errors\_errors.scss" />
+    <None Include="src\views\generic-ui\four0four\Four0Four.jsx" />
+    <None Include="src\views\generic-ui\loader\Loader.jsx" />
+    <None Include="src\views\generic-ui\loader\_loader.scss" />
+    <None Include="src\views\generic-ui\login\LogIn.jsx" />
+    <None Include="src\views\generic-ui\login\LoginForm.jsx" />
+    <None Include="src\views\home\Home.jsx" />
+    <None Include="src\views\home\_home.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="gulpfile.js" />
+    <Content Include="lib\jquery.signalR-2.2.0.min.js" />
+    <Content Include="package.json" />
+    <None Include="src\main.jsx" />
+    <Content Include="src\js\uiHelpers\UiHelpers.js" />
+    <Content Include="src\js\signalR\StartSignalR.js" />
+    <Content Include="src\js\view-model-updates\ServerRequests.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\views\generic-ui\errors\Errors.jsx" />
+    <Content Include="src\views\home\Home.js" />
+    <Content Include="src\views\Page.jsx" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="BeforeBuild">
+    <Exec Command="npm install" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="(set Configuration=$(Configuration)) &amp; node node_modules\gulp-cli\bin\gulp build" WorkingDirectory="$(ProjectDir)" />
+  </Target>
+</Project>

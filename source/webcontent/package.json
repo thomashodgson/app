@@ -1,0 +1,38 @@
+{
+  "name": "Application",
+  "dependencies": {
+    "uniq": "*",
+    "react": "*",
+    "react-dom": "*",
+    "babelify": "*",
+    "babel-preset-react": "*",
+    "jquery": "*",
+    "underscore": "*",
+    "moment": "2.11.1",
+    "xregexp": "3.1.0"
+  },
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-cli": "1.2.0",
+    "gulp-util": "3.0.7",
+    "gulp-notify": "2.2.0",
+    "gulp-rename": "1.2.2",
+    "gulp-sass": "2.2.0",
+    "gulp-autoprefixer": "3.1.0",
+    "gulp-concat-css": "2.2.0",
+    "gulp-bower": "0.0.13",
+    "gulp-css-globbing": "0.1.8",
+    "gulp-debug": "2.1.2",
+    "vinyl-source-stream": "*",
+    "browserify": "*",
+    "reactify": "*",
+    "watchify": "*",
+    "tape": "*",
+    "bower": "1.7.7",
+    "es6-promise": "*",
+    "run-sequence": "*"
+  },
+  "browser": {
+    "signalr": "./lib/jquery.signalR-2.2.0.min.js"
+  }
+}
