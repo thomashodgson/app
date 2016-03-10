@@ -42,7 +42,7 @@ namespace messaging
 
         private void LogInfo(Message message, string logMessage)
         {
-            _logger.Information($"Message Consumer: {GetMessageConsumerName()}, request url: {message.RequestUrl}: {logMessage}");
+            _logger.Information($"MessageId: {message.Id} Message Consumer: {GetMessageConsumerName()}, request url: {message.RequestUrl}: {logMessage}");
         }
 
         public void OnNext(Message message)

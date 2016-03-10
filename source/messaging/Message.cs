@@ -1,3 +1,4 @@
+
 using System;
 using models;
 
@@ -10,12 +11,12 @@ namespace messaging
         public User User { get; }
         public Guid Id { get; }
 
-        public Message(Guid id, string requestUrl, User user, MessageData data)
+        public Message(Guid? id, string requestUrl, User user, MessageData data)
         {
             RequestUrl = requestUrl;
             Data = data ?? new MessageData();
             User = user;
-            Id = id;
+            Id = id ?? Guid.NewGuid();
         }
     }
 }
