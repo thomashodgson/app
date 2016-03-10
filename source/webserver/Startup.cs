@@ -17,6 +17,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.MicrosoftAccount;
 using Microsoft.Owin.StaticFiles;
 using Owin;
+using Owin.Security.AesDataProtectorProvider;
 using RabbitMq_messaging;
 using LoggerFactory = SerilogWeb.Owin.LoggerFactory;
 
@@ -45,6 +46,8 @@ namespace webserver
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
             });
+
+            app.UseAesDataProtectorProvider();
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -128,8 +131,7 @@ namespace webserver
             {
                 builder.RegisterModule<DevMessagingModule>();
             }
-
-            builder.Register(ctx => ctx.Resolve<IMessageBusProvider>().GetMessageBus()).As<IMessageBus>();
+            
         }
 
         private static void SetupRoutes(HttpConfiguration config)

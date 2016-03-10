@@ -7,8 +7,9 @@ namespace webserver
     {
         static void Main(string[] args)
         {
-            string baseAddress = "http://localhost:9000/";
-            
+            var isInDocker = Environment.GetEnvironmentVariable("APP_RABBIT_NAME") != null;
+            string baseAddress = isInDocker ? "http://*:9000/" : "http://localhost:9000/";
+
             using (WebApp.Start<Startup>(url: baseAddress))
             {
                 Console.WriteLine("Press [q] to quit...");

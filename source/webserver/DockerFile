@@ -1,0 +1,4 @@
+FROM mono:latest
+ADD . /app		  
+EXPOSE 9000
+ENTRYPOINT ["mono", "/app/webserver.exe"]

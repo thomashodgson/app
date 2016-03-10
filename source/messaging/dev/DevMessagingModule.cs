@@ -8,6 +8,7 @@ namespace messaging.dev
         {
             base.Load(builder);
             builder.RegisterType<MessageBusProvider>().As<IMessageBusProvider>().SingleInstance();
+            builder.Register(ctx => ctx.Resolve<IMessageBusProvider>().GetMessageBus()).As<IMessageBus>();
         }
     }
 }

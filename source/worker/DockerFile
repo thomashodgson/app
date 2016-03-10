@@ -1,0 +1,3 @@
+FROM mono:latest
+ADD . /app		  
+ENTRYPOINT ["mono", "/app/worker.exe"]
