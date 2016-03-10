@@ -1,44 +1,27 @@
-﻿using System;
-using System.Threading;
-using messaging;
+﻿using messaging;
 using models.Urls;
 using Serilog;
 
 namespace worker
 {
-    class HelloMessageConsumer : IMessageConsumer
+    class HelloMessageConsumer : MessageConsumer
     {
-        private readonly IMessageBus _messageBus;
-        private readonly ILogger _log;
-        private readonly Random _random = new Random();
-        public HelloMessageConsumer(IMessageBus messageBus, ILogger log)
+        public HelloMessageConsumer(IMessageBus messageBus, ILogger logger) :
+            base(messageBus, logger, Event.HelloRequested, new[] { RequestUrls.Hello, RequestUrls.Bye })
         {
-            _messageBus = messageBus;
-            _log = log;
         }
 
-        public void Start()
+        protected override void OnMessage(Message message)
         {
-            _messageBus.GetIncomingMessageObservable(Event.HelloRequested, new[] {RequestUrls.Hello, RequestUrls.Bye}).Subscribe(new MessageObserver(ReplyToHello, _messageBus, _log));
-            _messageBus.GetIncomingMessageObservable(Event.HelloMessageCreated, RequestUrls.Bye).Subscribe(new MessageObserver(AddGoodBye, _messageBus, _log));
-        }
 
-        private void AddGoodBye(Message message)
-        {
-           message.Data.RespondedHelloMessage = $"{message.Data.RespondedHelloMessage}, and Goodbye";
-           _messageBus.Send(Event.GoodbyeMessageCreated, message);
-        }
+            //            Thread.Sleep(5000);
+            //            if (_random.Next(4) == 0)
+            //            {
+            //                throw new Exception("This is very serious");
+            //            }
 
-        private void ReplyToHello(Message message)
-        {
-//            Thread.Sleep(5000);
-//            if (_random.Next(4) == 0)
-//            {
-//                throw new Exception("This is very serious");
-//            }
-//            
-            message.Data.RespondedHelloMessage = $"Hello {message.Data.Name}"; 
-            _messageBus.Send(Event.HelloMessageCreated, message);
+            message.Data.RespondedHelloMessage = $"Hello {message.Data.Name}";
+            SendMessage(Event.HelloMessageCreated, message);
         }
     }
 }

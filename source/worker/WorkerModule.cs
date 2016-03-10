@@ -14,6 +14,7 @@ namespace worker
              builder.RegisterModule<BaseModule>();
              builder.RegisterModule<RabbitMqModule>();
              builder.RegisterType<HelloMessageConsumer>().As<IMessageConsumer>();
+             builder.RegisterType<GoodbyeMessageConsumer>().As<IMessageConsumer>();
              builder.Register(ctx => ctx.Resolve<IMessageBusProvider>().GetMessageBus()).As<IMessageBus>();
         }
      }
