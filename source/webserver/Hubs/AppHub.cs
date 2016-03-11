@@ -21,8 +21,7 @@ namespace webserver.Hubs
                 {
                     UserAuthenticationFinished = true,
                     Version = CurrentVersion(),
-                    User = user,
-                    Page = "Home"
+                    User = user
                 }));
 
             return base.OnConnected();

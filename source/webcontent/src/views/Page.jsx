@@ -26,7 +26,7 @@ Router.initialize([
             return <Four0Four></Four0Four>;
         }
     }
-]);
+], "Home");
 
 module.exports = React.createClass({
     getInitialState: function () {

@@ -5,27 +5,28 @@ var _ = require('underscore');
 
 
 module.exports = {
- 
-    initialize: function(routes) {
+
+    initialize: function (routes, defaultPage) {
         this.routes = routes;
         this.listenForRouteChanges();
         this.initialized = true;
+        this.defaultPage = defaultPage;
     },
 
-    isRouteMatch: function(state, route) {
+    isRouteMatch: function (state, route) {
         return route.page === state.Page && _.isEmpty(_.difference(this.getCaptureNames(route), _.keys(state)));
     },
 
-    insertCapture: function(state, segment) {
+    insertCapture: function (state, segment) {
         return this.isCaptureSegment(segment) ? state[this.getCaptureName(segment)] : segment;
     },
 
-    updateUrl: function(state, route) {
+    updateUrl: function (state, route) {
         var hash = _.map(this.getRouteSegments(route), _.bind(this.insertCapture, this, state)).join("/");
         location.hash = '#' + hash;
     },
 
-    updateUrlHash: function(state) {
+    updateUrlHash: function (state) {
         for (var i = 0; i < this.routes.length; ++i) {
             var route = this.routes[i];
             if (!route.disableUrlUpdates && this.isRouteMatch(state, route)) {
@@ -35,39 +36,39 @@ module.exports = {
         }
     },
 
-    getRouteSegments: function(route) {
+    getRouteSegments: function (route) {
         return route.pattern.split("/");
     },
 
-    isCaptureSegment: function(segment) {
+    isCaptureSegment: function (segment) {
         return segment[0] === ":";
     },
 
-    getCaptureNames: function(route) {
+    getCaptureNames: function (route) {
         return _.map(this.getCaptures(route), this.getCaptureName);
     },
 
-    getCaptures: function(route) {
+    getCaptures: function (route) {
         return _.filter(this.getRouteSegments(route), this.isCaptureSegment);
     },
 
-    getCaptureName: function(captureSegment) {
+    getCaptureName: function (captureSegment) {
         return captureSegment.substring(1);
     },
 
-    toRegExpSegment: function(segment) {
+    toRegExpSegment: function (segment) {
         return this.isCaptureSegment(segment) ? ("(?<" + this.getCaptureName(segment) + ">[^/]*)") : segment;
     },
 
-    toRegExp: function(route) {
+    toRegExp: function (route) {
         return _.map(this.getRouteSegments(route), this.toRegExpSegment, this).join("/");
     },
 
-    listenForRouteChanges: function() {
+    listenForRouteChanges: function () {
         window.addEventListener('hashchange', _.bind(this.updateViewModelFromHash, this));
     },
 
-    getHash: function() {
+    getHash: function () {
         return window.location.hash.substr(1);
     },
 
@@ -77,24 +78,24 @@ module.exports = {
 
         if (viewModelUpdate) {
             ClientSideViewModelUpdates.updateExistingViewModel(viewModelUpdate);
-        } 
+        }
     },
 
-    createViewModelUpdate: function(route, regExpMatch) {
+    createViewModelUpdate: function (route, regExpMatch) {
         var result = {
             Page: route.page
         };
 
         var captureNames = this.getCaptureNames(route);
 
-        _.each(captureNames, function(key) {
+        _.each(captureNames, function (key) {
             result[key] = regExpMatch[key];
         });
 
         return result;
     },
 
-    findViewModelUpdateFromRoute: function(hash) {
+    findViewModelUpdateFromRoute: function (hash) {
         for (var i = 0; i < this.routes.length; ++i) {
             var route = this.routes[i];
             var routeRegExp = this.toRegExp(route);
@@ -106,7 +107,7 @@ module.exports = {
         }
     },
 
-    getView: function(state) {
+    getView: function (state) {
         for (var i = 0; i < this.routes.length; ++i) {
             var route = this.routes[i];
             if (this.isRouteMatch(state, route)) {
@@ -115,8 +116,10 @@ module.exports = {
         }
     },
 
-    getViewModelFromUrl: function() {
+    getViewModelFromUrl: function () {
         var hash = this.getHash();
-        return this.findViewModelUpdateFromRoute(hash);
+        return hash ? this.findViewModelUpdateFromRoute(hash) : {
+            Page: this.defaultPage
+        }
     }
 };
