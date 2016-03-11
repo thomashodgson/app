@@ -19,6 +19,7 @@ using Microsoft.Owin.StaticFiles;
 using Owin;
 using Owin.Security.AesDataProtectorProvider;
 using RabbitMq_messaging;
+using webserver.UiUpdates;
 using LoggerFactory = SerilogWeb.Owin.LoggerFactory;
 
 [assembly: OwinStartup(typeof(webserver.Startup))]
@@ -66,10 +67,18 @@ namespace webserver
 
         private void StartMessageConsumers(IContainer container)
         {
-            foreach (var messageConsumer in container.Resolve<IEnumerable<IMessageConsumer>>())
+            var messageConsumerFactory = container.Resolve<MessageConsumerFactory>();
+            foreach (var messageConsumerConfig in container.Resolve<IEnumerable<IMessageConsumerConfig>>())
             {
-                messageConsumer.Start();
+                messageConsumerFactory.Create(messageConsumerConfig).Start();
             }
+
+            var uiUpdatorMessageConsumerFactory = container.Resolve<UiUpdatorMessageConsumerFactory>();
+            foreach (var messageConsumerConfig in container.Resolve<IEnumerable<IUiUpdatorMessageConsumerConfig>>())
+            {
+                uiUpdatorMessageConsumerFactory.Create(messageConsumerConfig).Start();
+            }
+
         }
 
         private static void SetupFileServer(IAppBuilder appBuilder)

@@ -11,6 +11,7 @@ namespace RabbitMq_messaging
             base.Load(builder);
             builder.RegisterType<MessageBusProvider>().As<IMessageBusProvider>();
             builder.Register(ctx => ctx.Resolve<IMessageBusProvider>().GetMessageBus()).As<IMessageBus>();
+            builder.RegisterModule<MessagingModule>();
         }
     }
 }

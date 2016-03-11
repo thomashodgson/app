@@ -16,6 +16,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webserver", "webserver\webserver.csproj", "{2D3B351B-7EF6-418A-9C40-81049776139D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0FE46026-7ECB-4202-8466-BEF979274681} = {0FE46026-7ECB-4202-8466-BEF979274681}
+		{3535D786-34C5-4F9A-AFBC-37D71FFE94EC} = {3535D786-34C5-4F9A-AFBC-37D71FFE94EC}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webcontent", "webcontent\webcontent.csproj", "{53F7D37E-E3BA-49D9-831D-342019C4AB98}"

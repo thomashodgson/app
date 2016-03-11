@@ -1,24 +1,18 @@
-﻿using messaging;
+﻿using System;
+using System.Collections.Generic;
+using messaging;
 using models;
-using models.Urls;
-using Serilog;
 
 namespace webserver.UiUpdates
 {
-    class ErrorReportUiUpdater : UiUpdatingMessageConsumer
+    class ErrorReportUiUpdaterConfig : IUiUpdatorMessageConsumerConfig
     {
-        public ErrorReportUiUpdater(UiUpdator uiUpdator, IMessageBus messageBus, ILogger logger) :
-            base(uiUpdator, messageBus, logger, Event.ErrorReported, RequestUrls.AllUrls)
+        public Event Event => Event.ErrorReported;
+        public IEnumerable<string> RequestUrls => models.Urls.RequestUrls.AllUrls;
+        public Func<MessageData, dynamic> ViewModelFragmentFactory => messageData => new
         {
-        }
-
-        protected override dynamic GetViewModelFragment(MessageData messageData)
-        {
-            return new
-            {
-                Error = messageData.Error
-            };
-        }
+            Error = messageData.Error
+        };
     }
 }
 

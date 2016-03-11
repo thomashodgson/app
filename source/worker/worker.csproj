@@ -55,8 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GoodbyeMessageConsumer.cs" />
-    <Compile Include="HelloMessageConsumer.cs" />
+    <Compile Include="GoodbyeMessageConsumerConfig.cs" />
+    <Compile Include="HelloMessageConsumerConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerModule.cs" />

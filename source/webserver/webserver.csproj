@@ -172,12 +172,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UiUpdates\ErrorReportUiUpdater.cs" />
-    <Compile Include="UiUpdates\HelloMessageUiUpdator.cs" />
-    <Compile Include="UiUpdates\UiUpdatingMessageConsumer.cs" />
+    <Compile Include="UiUpdates\GoodbyeMessageUiUpdatorConfig.cs" />
+    <Compile Include="UiUpdates\HelloMessageUiUpdatorConfig.cs" />
+    <Compile Include="UiUpdates\IUiUpdatorMessageConsumerConfig.cs" />
     <Compile Include="UiUpdates\UiUpdator.cs" />
+    <Compile Include="UiUpdates\UiUpdatorMessageConsumerFactory.cs" />
     <Compile Include="WebServerModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\app-base-module\app-base-module.csproj">
+      <Project>{3535d786-34c5-4f9a-afbc-37d71ffe94ec}</Project>
+      <Name>app-base-module</Name>
+    </ProjectReference>
     <ProjectReference Include="..\app-config\app-config.csproj">
       <Project>{94b7e4dd-e9bb-4ecb-9059-9292e5d3fd22}</Project>
       <Name>app-config</Name>

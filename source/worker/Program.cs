@@ -26,10 +26,11 @@ namespace worker
              var builder = new ContainerBuilder();
              builder.RegisterModule<WorkerModule>();
              var container = builder.Build();
- 
-             foreach (var messageConsumer in container.Resolve<IEnumerable<IMessageConsumer>>())
+
+             var messageConsumerFactory = container.Resolve<MessageConsumerFactory>();
+             foreach (var messageConsumerConfig in container.Resolve<IEnumerable<IMessageConsumerConfig>>())
              {
-                 messageConsumer.Start();
+                messageConsumerFactory.Create(messageConsumerConfig).Start();
              }
  
              return container;

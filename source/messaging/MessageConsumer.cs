@@ -5,26 +5,28 @@ using Serilog;
 
 namespace messaging
 {
-    public abstract class MessageConsumer : IMessageConsumer, IObserver<Message>
+    public class MessageConsumer : IMessageConsumer, IObserver<Message>
     {
         private readonly IMessageBus _messageBus;
         private readonly ILogger _logger;
         private readonly Event _event;
         private readonly IEnumerable<string> _requestUrls;
-
-        protected MessageConsumer(IMessageBus messageBus, ILogger logger, Event @event, string requestUrl) :
-            this(messageBus, logger, @event, new []{ requestUrl }) {}
-
-        protected MessageConsumer(IMessageBus messageBus, ILogger logger, Event @event, IEnumerable<string> requestUrls)
+        private readonly Action<IMessageBus, Message> _messageHandler;
+        
+        public MessageConsumer(
+            IMessageBus messageBus, 
+            ILogger logger, 
+            Event @event, 
+            IEnumerable<string> requestUrls, 
+            Action<IMessageBus, Message> messageHandler)
         {
             _messageBus = messageBus;
             _logger = logger;
             _event = @event;
             _requestUrls = requestUrls;
+            _messageHandler = messageHandler;
         }
-
-        protected abstract void OnMessage(Message message);
-
+        
         public void Start()
         {
             _messageBus.GetIncomingMessageObservable(_event, _requestUrls).Subscribe(this);
@@ -50,7 +52,7 @@ namespace messaging
             try
             {
                 LogInfo(message, "Message received");
-                OnMessage(message);
+                _messageHandler(_messageBus, message);
                 LogInfo(message, "Message processed");
             }
             catch (Exception e)

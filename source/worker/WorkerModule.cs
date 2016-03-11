@@ -13,8 +13,8 @@ namespace worker
              base.Load(builder);
              builder.RegisterModule<BaseModule>();
              builder.RegisterModule<RabbitMqModule>();
-             builder.RegisterType<HelloMessageConsumer>().As<IMessageConsumer>();
-             builder.RegisterType<GoodbyeMessageConsumer>().As<IMessageConsumer>();
+             builder.RegisterType<HelloMessageConsumerConfig>().As<IMessageConsumerConfig>();
+             builder.RegisterType<GoodbyeMessageConsumerConfig>().As<IMessageConsumerConfig>();
         }
      }
  } 
